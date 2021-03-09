@@ -18,7 +18,7 @@ function Spot(props) {
   let tail_id = 'tail_' + props.count;
   return [
     <div id={output_id}>{props.output}</div>,
-    <div id={tail_id}>我是屁股</div>,
+    <div id={tail_id}>資料底端</div>,
   ];
 }
 
@@ -46,9 +46,7 @@ class Show extends React.Component {
             </dl>
           );
         }
-        let count = this.props.count + 1;
         this.setState({ output: output });
-        this.setState({ count: count });
       })
       .catch((error) => {
         console.error(error);
@@ -70,9 +68,6 @@ class InitShow extends React.Component {
     };
   }
   componentDidUpdate(prevProps, prevState) {
-    console.log('in update');
-    console.log(prevProps);
-    console.log(this.props);
     if (
       (this.props.city != null || this.props.city != '-選擇城市-') &&
       this.props.city != prevProps.city
@@ -95,9 +90,7 @@ class InitShow extends React.Component {
               </dl>
             );
           }
-          let count = this.state.count + 1;
           this.setState({ output: output });
-          this.setState({ count: count });
         })
         .catch((error) => {
           console.error(error);
@@ -117,14 +110,14 @@ class InitShow extends React.Component {
       '&$format=JSON';
     // this.setState({ data: null });
     // this.setState({ url: tmp_url });
-    let tail = 'tail_' + (this.state.count - 1);
+    let tail = 'tail_' + this.state.count;
     console.log(tail);
     ReactDOM.render(
       <Show count={this.state.count} city={this.props.city} url={tmp_url} />,
       document.getElementById(tail)
     );
 
-    let count = this.props.count + 1;
+    let count = this.state.count + 1;
     this.setState({ count: count });
   }
   render_spot() {

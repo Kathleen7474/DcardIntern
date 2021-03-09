@@ -5,7 +5,7 @@ function Spot(props) {
   let tail_id = 'tail_' + props.count;
   return [
     <div id={output_id}>{props.output}</div>,
-    <div id={tail_id}>我是屁股</div>,
+    <div id={tail_id}>資料底端</div>,
   ];
 }
 class Show extends React.Component {
