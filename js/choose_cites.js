@@ -1,6 +1,5 @@
 $(document).ready(function () {
   $(document).on('change', '#select_bar', function () {
-    console.log(this.value);
     let tmp_url =
       'https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/' +
       this.value +
@@ -12,8 +11,6 @@ $(document).ready(function () {
   });
 });
 function Spot(props) {
-  console.log('output');
-  console.log(props.output);
   let output_id = 'output ' + props.count;
   let tail_id = 'tail_' + props.count;
   return [
@@ -53,7 +50,6 @@ class Show extends React.Component {
       });
   }
   render() {
-    console.log('屁股的屁股' + this.props.count);
     return <Spot output={this.state.output} count={this.props.count} />;
   }
 }
@@ -111,7 +107,6 @@ class InitShow extends React.Component {
     // this.setState({ data: null });
     // this.setState({ url: tmp_url });
     let tail = 'tail_' + this.state.count;
-    console.log(tail);
     ReactDOM.render(
       <Show count={this.state.count} city={this.props.city} url={tmp_url} />,
       document.getElementById(tail)
@@ -122,14 +117,11 @@ class InitShow extends React.Component {
   }
   render_spot() {
     if (this.props.city == null || this.props.city == '-選擇城市-') {
-      console.log(this.props.city);
       return <h4>-先選擇城市-</h4>;
     }
     if (this.state.data == null) {
-      console.log('資料還沒好');
       return <h4>-loading-</h4>;
     } else {
-      console.log('重新render' + this.state.count);
       return <Spot output={this.state.output} count={this.state.count} />;
     }
   }
@@ -141,7 +133,6 @@ class InitShow extends React.Component {
     rect = oo.getBoundingClientRect();
     let outer_bottom = rect.bottom; //yy
     if (inner_bottom - outer_bottom <= 2) {
-      console.log('get to bottom');
       this.send_request();
     }
   }

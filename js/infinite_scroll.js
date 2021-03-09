@@ -1,6 +1,4 @@
 function Spot(props) {
-  console.log('output');
-  console.log(props.output);
   let output_id = 'output ' + props.count;
   let tail_id = 'tail_' + props.count;
   return [
@@ -41,7 +39,6 @@ class Show extends React.Component {
       });
   }
   render() {
-    console.log('屁股的屁股' + this.props.count);
     return <Spot output={this.state.output} count={this.props.count} />;
   }
 }
@@ -76,7 +73,6 @@ class InitShow extends React.Component {
         let count = 1;
         this.setState({ output: output });
         this.setState({ count: count });
-        console.log('in mount' + this.state.count);
       })
       .catch((error) => {
         console.error(error);
@@ -85,8 +81,6 @@ class InitShow extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (nextState.count != this.state.count) {
-      console.log('不要刷新');
-      console.log(this.state.count);
       return false;
     } else {
       return true;
@@ -103,7 +97,6 @@ class InitShow extends React.Component {
     // this.setState({ data: null });
     // this.setState({ url: tmp_url });
     let tail = 'tail_' + (this.state.count - 1);
-    console.log(tail);
     ReactDOM.render(
       <Show count={this.state.count} url={tmp_url} />,
       document.getElementById(tail)
@@ -114,10 +107,8 @@ class InitShow extends React.Component {
   }
   render_spot() {
     if (this.state.data == null) {
-      console.log('資料還沒好');
       return <h4>-loading-</h4>;
     } else {
-      console.log('重新render' + this.state.count);
       return <Spot output={this.state.output} count={this.state.count} />;
     }
   }
@@ -129,7 +120,6 @@ class InitShow extends React.Component {
     rect = oo.getBoundingClientRect();
     let outer_bottom = rect.bottom; //yy
     if (inner_bottom - outer_bottom <= 2) {
-      console.log('get to bottom');
       this.send_request();
     }
   }
