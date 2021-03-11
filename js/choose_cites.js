@@ -4,6 +4,7 @@ $(document).ready(function () {
       'https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/' +
       this.value +
       '?$top=30&$skip=0&$format=JSON';
+    ReactDOM.unmountComponentAtNode(document.getElementById('root2'));
     ReactDOM.render(
       <InitShow city={this.value} url={tmp_url} />,
       document.getElementById('root2')
@@ -63,15 +64,13 @@ class InitShow extends React.Component {
       count: 0,
     };
   }
-  componentDidUpdate(prevProps, prevState) {
-    if (
-      (this.props.city != null || this.props.city != '-選擇城市-') &&
-      this.props.city != prevProps.city
-    ) {
+  componentDidMount() {
+    if (this.props.city != null || this.props.city != '-選擇城市-') {
       fetch(this.props.url)
         .then((response) => response.json())
         .then((jsonData) => {
           this.setState({ data: jsonData });
+          this.setState({ count: 0 });
           let e;
           let output = [];
           for (let i = 0; i < jsonData.length; i++) {
@@ -97,18 +96,20 @@ class InitShow extends React.Component {
   send_request() {
     let i = 1;
     let tmp_url =
-      'https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot' +
+      'https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/' +
       this.props.city +
-      '?$top=' +
+      '?$top=30&$skip=' +
       30 * (this.state.count + 1) +
-      '&$skip=' +
-      30 * this.state.count +
       '&$format=JSON';
     // this.setState({ data: null });
     // this.setState({ url: tmp_url });
     let tail = 'tail_' + this.state.count;
     ReactDOM.render(
-      <Show count={this.state.count} city={this.props.city} url={tmp_url} />,
+      <Show
+        count={this.state.count + 1}
+        city={this.props.city}
+        url={tmp_url}
+      />,
       document.getElementById(tail)
     );
 
@@ -122,7 +123,7 @@ class InitShow extends React.Component {
     if (this.state.data == null) {
       return <h4>-loading-</h4>;
     } else {
-      return <Spot output={this.state.output} count={this.state.count} />;
+      return <Spot output={this.state.output} count={0} />;
     }
   }
   handle_scroll() {

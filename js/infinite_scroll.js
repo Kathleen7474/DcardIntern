@@ -89,9 +89,7 @@ class InitShow extends React.Component {
   send_request() {
     let i = 1;
     let tmp_url =
-      'https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot?$top=' +
-      30 * (this.state.count + 1) +
-      '&$skip=' +
+      'https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot?$top=30&$skip=' +
       30 * this.state.count +
       '&$format=JSON';
     // this.setState({ data: null });
