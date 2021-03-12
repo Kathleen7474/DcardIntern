@@ -1,9 +1,13 @@
+let last = false;
 function Spot(props) {
   let output_id = 'output ' + props.count;
   let tail_id = 'tail_' + props.count;
+  if (last == true) {
+    return <div id={tail_id}>資料底端</div>;
+  }
   return [
     <div id={output_id}>{props.output}</div>,
-    <div id={tail_id}>資料底端</div>,
+    <div id={tail_id}>-loading-</div>,
   ];
 }
 class Show extends React.Component {
@@ -19,6 +23,9 @@ class Show extends React.Component {
       .then((response) => response.json())
       .then((jsonData) => {
         this.setState({ data: jsonData });
+        if (jsonData == '') {
+          last = true;
+        }
         let e;
         let output = [];
         for (let i = 0; i < jsonData.length; i++) {
@@ -47,7 +54,6 @@ class InitShow extends React.Component {
     super(props);
     this.state = {
       count: 0, //幾次request
-      total: 0, //總共幾筆資料(感覺不會用到)
       url:
         'https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot?$top=30&$skip=0&$format=JSON',
       data: null,
@@ -118,7 +124,7 @@ class InitShow extends React.Component {
     rect = oo.getBoundingClientRect();
     let outer_bottom = rect.bottom; //yy
     if (inner_bottom - outer_bottom <= 2) {
-      this.send_request();
+      if (last == false) this.send_request();
     }
   }
 

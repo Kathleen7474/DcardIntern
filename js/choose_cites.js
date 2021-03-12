@@ -1,3 +1,4 @@
+let last = false;
 $(document).ready(function () {
   $(document).on('change', '#select_bar', function () {
     let tmp_url =
@@ -14,9 +15,12 @@ $(document).ready(function () {
 function Spot(props) {
   let output_id = 'output ' + props.count;
   let tail_id = 'tail_' + props.count;
+  if (last == true) {
+    return [<div id={tail_id}>資料底端</div>];
+  }
   return [
     <div id={output_id}>{props.output}</div>,
-    <div id={tail_id}>資料底端</div>,
+    <div id={tail_id}>-loading-</div>,
   ];
 }
 
@@ -33,6 +37,9 @@ class Show extends React.Component {
       .then((response) => response.json())
       .then((jsonData) => {
         this.setState({ data: jsonData });
+        if (jsonData == '') {
+          last = true;
+        }
         let e;
         let output = [];
         for (let i = 0; i < jsonData.length; i++) {
@@ -134,7 +141,7 @@ class InitShow extends React.Component {
     rect = oo.getBoundingClientRect();
     let outer_bottom = rect.bottom; //yy
     if (inner_bottom - outer_bottom <= 2) {
-      this.send_request();
+      if (last == false) this.send_request();
     }
   }
 
