@@ -1,6 +1,7 @@
 let last = false;
 $(document).ready(function () {
   $(document).on('change', '#select_bar', function () {
+    last = false;
     let tmp_url =
       'https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/' +
       this.value +
@@ -15,7 +16,7 @@ $(document).ready(function () {
 function Spot(props) {
   let output_id = 'output ' + props.count;
   let tail_id = 'tail_' + props.count;
-  if (last == true) {
+  if (props.last == true) {
     return [<div id={tail_id}>資料底端</div>];
   }
   return [
@@ -39,6 +40,7 @@ class Show extends React.Component {
         this.setState({ data: jsonData });
         if (jsonData == '') {
           last = true;
+          console.log(this.props.count);
         }
         let e;
         let output = [];
@@ -58,7 +60,9 @@ class Show extends React.Component {
       });
   }
   render() {
-    return <Spot output={this.state.output} count={this.props.count} />;
+    return (
+      <Spot output={this.state.output} count={this.props.count} last={last} />
+    );
   }
 }
 

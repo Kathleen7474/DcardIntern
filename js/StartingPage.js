@@ -2,7 +2,7 @@ let last = false;
 function Spot(props) {
   let output_id = 'output ' + props.count;
   let tail_id = 'tail_' + props.count;
-  if (last == true) {
+  if (props.last == true) {
     return <div id={tail_id}>資料底端</div>;
   }
   return [
@@ -46,7 +46,9 @@ class Show extends React.Component {
       });
   }
   render() {
-    return <Spot output={this.state.output} count={this.props.count} />;
+    return (
+      <Spot output={this.state.output} count={this.props.count} last={last} />
+    );
   }
 }
 class InitShow extends React.Component {
