@@ -40,7 +40,6 @@ class Show extends React.Component {
         this.setState({ data: jsonData });
         if (jsonData == '') {
           last = true;
-          console.log(this.props.count);
         }
         let e;
         let output = [];
