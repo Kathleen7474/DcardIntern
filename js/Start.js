@@ -65,6 +65,7 @@ class InitShow_All extends React.Component {
     };
   }
   componentDidMount() {
+    last = false;
     fetch(this.state.url)
       .then((response) => response.json())
       .then((jsonData) => {
@@ -218,6 +219,7 @@ class InitShow_City extends React.Component {
         output: null,
         count: 0,
       });
+      last = false;
       fetch(this.state.url)
         .then((response) => response.json())
         .then((jsonData) => {
@@ -246,6 +248,7 @@ class InitShow_City extends React.Component {
   }
   componentDidMount() {
     {
+      last = false;
       fetch(this.state.url)
         .then((response) => response.json())
         .then((jsonData) => {
