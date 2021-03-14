@@ -11,7 +11,7 @@ function Spot(props) {
     <div id={tail_id}>-loading-</div>,
   ];
 }
-//這一區為顯示所有
+//ALL為顯示所有
 class Show_All extends React.Component {
   constructor(props) {
     super(props);
@@ -154,7 +154,7 @@ class InitShow_All extends React.Component {
   }
 }
 
-//這一區為城市
+//City為城市
 class Show_City extends React.Component {
   constructor(props) {
     super(props);
@@ -220,7 +220,11 @@ class InitShow_City extends React.Component {
         count: 0,
       });
       last = false;
-      fetch(this.state.url)
+      fetch(
+        'https://ptx.transportdata.tw/MOTC/v2/Tourism/ScenicSpot/' +
+          this.props.match.params.city +
+          '?$top=30&$skip=0&$format=JSON'
+      )
         .then((response) => response.json())
         .then((jsonData) => {
           this.setState({ data: jsonData });
